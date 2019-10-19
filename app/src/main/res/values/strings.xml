@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ChitChat</string>
+    <string name="click_here_to_register">Click here To Register</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hi_there_i_am_using_chitchat_app">Hi there, I am using ChitChat App</string>
+    <string name="newStatus">Hi, there I\'m using Chit Chat App</string>
+</resources>

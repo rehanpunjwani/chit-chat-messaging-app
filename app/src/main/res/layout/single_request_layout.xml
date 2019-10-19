@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/single_request_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+   >
+
+
+    <Button
+        android:id="@+id/single_req_decline_btn"
+        android:layout_width="84dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="208dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorAccent"
+        android:text="Decline"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/req_single_name"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/single_req_accept_btn2"
+        android:layout_width="84dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="16dp"
+        android:background="#45CE26"
+        android:text="Accept"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/req_single_name"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/req_single_online_icon"
+        android:layout_width="9dp"
+        android:layout_height="13dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="333dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/greencircleicon14" />
+
+    <TextView
+        android:id="@+id/req_single_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Display Name"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/req_single_image"
+        app:layout_constraintTop_toTopOf="@+id/req_single_image" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/req_single_image"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/default_avatar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
