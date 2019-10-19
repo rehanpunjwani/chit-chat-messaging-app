@@ -55,11 +55,14 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mRootRef = FirebaseDatabase.getInstance().getReference();
 
-        mToolbar = (Toolbar) findViewById(R.id.main_app_bar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Chit Chat");
-        mCurrentUser = mAuth.getCurrentUser(); //changing all getCurrentUser to mCurrentUser and UUId to mCurrentUSerID
 
+        mToolbar = (Toolbar) findViewById(R.id.main_app_bar);
+
+        mCurrentUser = mAuth.getCurrentUser(); //changing all getCurrentUser to mCurrentUser and UUId to mCurrentUSerID
+        if(mCurrentUser != null) {
+            setSupportActionBar(mToolbar);
+            getSupportActionBar().setTitle("Chit Chat");
+        }
 
 
         if (mCurrentUser != null) {
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         //      FirebaseUser currentUser = mAuth.getCurrentUser();
 
 
-                if(mCurrentUserId != null && mUserRef.child("online")!= null) {
+                if(mCurrentUserId != null && mUserRef != null) {
                     mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
                 }
             }
