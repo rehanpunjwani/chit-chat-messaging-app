@@ -261,6 +261,7 @@ public class RequestFragment extends Fragment {
                 } else {
 
                     reqViewHolder.Invisible();
+                    text.setText("No New Friend Request");
 
 
                 }

@@ -1,7 +1,9 @@
 package com.example.chitchat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,12 +81,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         }
     }
 
+    public static void setMargins (View v, int l, int t, int r, int b) {
+        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            p.setMargins(l, t, r, b);
+            v.requestLayout();
+        }
+    }
     @Override
     public void onBindViewHolder(final MessageViewHolder viewHolder, int i) {
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String current_user_id = mAuth.getCurrentUser().getUid();
-        Messages c = mMessageList.get(i);
+        final Messages c = mMessageList.get(i);
 
         String from_user = c.getFrom();
         String message_type = c.getType();
@@ -93,9 +102,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             viewHolder.messageText.setBackgroundResource(R.drawable.my_message);
             viewHolder.messageText.setTextColor(Color.WHITE);
             viewHolder.relativeLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-
-            viewHolder.profileImage.setVisibility(View.INVISIBLE);
-            viewHolder.displayName.setVisibility(View.INVISIBLE);
+  //          viewHolder.profileImage.setVisibility(View.INVISIBLE);
+//          viewHolder.displayName.setVisibility(View.INVISIBLE);
 
 
 
@@ -105,8 +113,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             viewHolder.messageText.setBackgroundResource(R.drawable.their_message);
             viewHolder.messageText.setTextColor(Color.parseColor("#7213B6"));
             viewHolder.relativeLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-            viewHolder.displayName.setVisibility(View.VISIBLE);
-            viewHolder.profileImage.setVisibility(View.VISIBLE);
+//            viewHolder.displayName.setVisibility(View.VISIBLE);
+       //     viewHolder.profileImage.setVisibility(View.VISIBLE);
+
 
 
 
@@ -157,7 +166,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         }
 
+        //added
+        viewHolder.messageText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(c.getMessage().contains("http")){
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(c.getMessage()));
+                    v.getContext().startActivity(browserIntent);
+                }
+            }
+        });
+
     }
+
 
     @Override
     public int getItemCount() {

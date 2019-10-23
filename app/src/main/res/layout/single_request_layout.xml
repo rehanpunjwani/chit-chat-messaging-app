@@ -5,6 +5,7 @@
     android:id="@+id/single_request_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
    >
 
 
@@ -14,7 +15,8 @@
         android:layout_height="42dp"
         android:layout_marginStart="208dp"
         android:layout_marginTop="16dp"
-        android:background="@color/colorAccent"
+        android:backgroundTint="#F00606"
+        android:background="@drawable/round_btn"
         android:text="Decline"
         android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,7 +30,8 @@
         android:layout_height="42dp"
         android:layout_marginStart="104dp"
         android:layout_marginTop="16dp"
-        android:background="#45CE26"
+        android:backgroundTint="#45CE26"
+        android:background="@drawable/round_btn"
         android:text="Accept"
         android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,9 +66,18 @@
         android:layout_height="64dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
         android:src="@drawable/default_avatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="270dp"
+        android:layout_height="0.65dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="48dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/single_req_decline_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

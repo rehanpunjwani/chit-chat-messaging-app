@@ -6,10 +6,17 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">#fff</item>
+        <item name="colorControlActivated">#000</item>
+        <item name="colorControlHighlight">#000</item>
     </style>
 
     <style name="PopupMenuStyle" parent="Theme.AppCompat.Light">
         <item name="android:background">@android:color/white</item>
+    </style>
+    <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">
+    <item name="android:textColor">#fff</item>
+
     </style>
 
 </resources>

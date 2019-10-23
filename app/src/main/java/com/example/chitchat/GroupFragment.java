@@ -1,36 +1,34 @@
 package com.example.chitchat;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
+
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import de.hdodenhof.circleimageview.CircleImageView;
+
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import androidx.appcompat.widget.SearchView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.database.ChildEventListener;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
-import java.security.acl.Group;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -64,7 +62,7 @@ public class GroupFragment extends Fragment {
 
 
         GroupRef = FirebaseDatabase.getInstance().getReference().child("Groups");
-
+        setHasOptionsMenu(true);
 
         IntializeFields();
 
@@ -94,9 +92,13 @@ public class GroupFragment extends Fragment {
     private void IntializeFields()
     {
         list_view = (ListView)  groupFragmentView.findViewById(R.id.list_view);
-        arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, list_of_groups);
+        arrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.single_group_layout1, list_of_groups);
+
         list_view.setAdapter(arrayAdapter);
     }
+
+
+
 
 
     private void RetrieveAndDisplayGroups()
@@ -118,6 +120,7 @@ public class GroupFragment extends Fragment {
                 list_of_groups.addAll(set);
                 if(list_of_groups.isEmpty()){
                     text.setText("No Groups Created");
+                    arrayAdapter.clear();
 
                 }
                 else{
@@ -131,6 +134,33 @@ public class GroupFragment extends Fragment {
 
             }
         });
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.group_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.group_search_bar);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Type here to Search");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                arrayAdapter.getFilter().filter(newText);
+                return true;
+            }
+
+        });
+
+
+
+
     }
 
 }

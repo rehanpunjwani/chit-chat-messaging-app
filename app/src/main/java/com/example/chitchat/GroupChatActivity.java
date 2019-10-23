@@ -199,6 +199,11 @@ public class GroupChatActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private void GetUserInfo()
     {
         UsersRef.child(mCurrentUserId).addValueEventListener(new ValueEventListener() {

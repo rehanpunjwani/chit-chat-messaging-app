@@ -15,10 +15,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,6 +43,7 @@ public class FriendsFragment extends Fragment {
     private FirebaseAuth mAuth;
 
     private String mCurrent_user_id;
+    private FloatingActionButton mAddBtn;
 
     private View mMainView;
     private TextView text;
@@ -58,6 +61,7 @@ public class FriendsFragment extends Fragment {
 
         mFriendsList = (RecyclerView) mMainView.findViewById(R.id.friends_list);
         mAuth = FirebaseAuth.getInstance();
+        mAddBtn = mMainView.findViewById(R.id.friend_all_user);
 
         mCurrent_user_id = mAuth.getCurrentUser().getUid();
         text = (TextView) mMainView.findViewById(R.id.request_fragment_text);
@@ -70,6 +74,15 @@ public class FriendsFragment extends Fragment {
 
         mFriendsList.setHasFixedSize(true);
         mFriendsList.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        mAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent allUserIntent = new Intent(getContext(),UsersActivity.class);
+                startActivity(allUserIntent);
+            }
+        });
+
 
         // Inflate the layout for this fragment
         return mMainView;

@@ -15,12 +15,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="78dp"
             android:layout_height="55dp"
             android:id="@+id/item_image"
-            android:src="@mipmap/ic_launcher"
-            ></ImageView>
+            android:src="@drawable/default_avatar"
+            ></de.hdodenhof.circleimageview.CircleImageView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,10 +37,13 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:id="@+id/callButton"
                 android:text="CALL"
+                android:textColor="#fff"
+                android:backgroundTint="#42C212"
                 android:layout_margin="10dp"
+                android:background="@drawable/round_btn"
                 android:textSize="16sp"/>
         </LinearLayout>
 

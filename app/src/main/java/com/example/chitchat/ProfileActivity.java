@@ -73,7 +73,6 @@ public class ProfileActivity extends AppCompatActivity {
         mProfileImage = (ImageView) findViewById(R.id.profile_image);
         mProfileName = (TextView) findViewById(R.id.profile_displayName);
         mProfileStatus = (TextView) findViewById(R.id.profile_status);
-        mProfileFriendsCount = (TextView) findViewById(R.id.profile_totalFriends);
         mProfileSendReqBtn = (Button) findViewById(R.id.profile_send_req_btn);
         mDeclineBtn = (Button) findViewById(R.id.profile_decline_btn);
         mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
@@ -368,13 +367,16 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         final String key = getIntent().getStringExtra("key");
-        if(key!=null)
-            if(key.equals("notification_1")) {
+        if(key!=null) {
+            if (key.equals("notification_1")) {
                 Intent chatIntent = new Intent(this, MainActivity.class);
                 startActivity(chatIntent);
                 finish();
             }
+        }
+        else {
+            finish();
+        }
     }
 }

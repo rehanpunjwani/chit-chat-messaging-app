@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
             mCurrentUserId =mCurrentUser.getUid();
 
         }
+        if (!InternetConnection.checkConnection(MainActivity.this)) {
+            Toast.makeText(MainActivity.this,"No Internet Connection",Toast.LENGTH_LONG).show();
+        }
 
         mViewPager = (ViewPager) findViewById(R.id.tab_pager);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -127,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
 
+        intentExtra = getIntent().getStringExtra("backPressed");
         if(intentExtra != null) {
             if (intentExtra.equals("notification")) {
                 TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tab);

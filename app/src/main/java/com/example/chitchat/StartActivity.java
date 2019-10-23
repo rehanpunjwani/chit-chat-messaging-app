@@ -58,7 +58,7 @@ public class StartActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.RECORD_AUDIO,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_PHONE_STATE,Manifest.permission.MODIFY_AUDIO_SETTINGS,Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.ACCESS_NETWORK_STATE,Manifest.permission.INTERNET, Manifest.permission.CALL_PRIVILEGED},
+                        Manifest.permission.ACCESS_NETWORK_STATE,Manifest.permission.INTERNET, Manifest.permission.CALL_PRIVILEGED, Manifest.permission.ACCESS_WIFI_STATE},
                 1);
 
 

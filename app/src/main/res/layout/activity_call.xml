@@ -6,9 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".CallActivity">
 
+    <include layout="@layout/layout_app_bar" android:id="@+id/call_bar"/>
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/call_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/call_recycler_view"/>
+        android:layout_alignTop="@+id/call_bar"
+        android:layout_marginTop="52dp" />
 
 </RelativeLayout>

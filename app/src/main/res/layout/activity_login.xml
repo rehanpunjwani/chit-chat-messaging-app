@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login"
     tools:context=".RegisterActivity">
 
     <include
@@ -12,20 +13,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></include>
 
     <Button
         android:id="@+id/reg_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/colorPrimaryDark"
+        android:background="@drawable/round_btn"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="Login"
+
         android:textColor="#F5FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.938"
@@ -42,8 +46,11 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="60dp"
         android:layout_marginRight="123dp"
-        android:text="Login to Your Account"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:text=""
+        android:textColor="#fff"
+        android:textColorHighlight="#fff"
+        android:textColorHint="#fff"
+        android:textColorLink="#fff"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -55,31 +62,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
+        android:background="@drawable/round_btn"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
+        app:boxBackgroundColor="#FFFFFF"
+        app:boxStrokeColor="#F5FFFFFF"
         app:layout_constraintTop_toBottomOf="@+id/login_et1"
         tools:layout_editor_absoluteX="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_email_black_24dp"
+            android:drawablePadding="5dp"
             android:hint="Enter your Email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textColor="#fff"
+            android:textColorHighlight="#fff"
+            android:textColorHint="#fff"
+            android:textColorLink="#fff" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/reg_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
+        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
         android:layout_margin="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reg_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+            android:drawablePadding="5dp"
             android:hint="Enter your Password"
-            android:inputType="textPassword" />
+
+            android:inputType="textPassword"
+            android:textColor="#fff"
+            android:textColorHighlight="#fff"
+            android:textColorHint="#fff"
+            android:textColorLink="#fff" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -87,11 +115,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="268dp"
+        android:layout_marginBottom="232dp"
         android:text="Forgot Your Password?"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_btn"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

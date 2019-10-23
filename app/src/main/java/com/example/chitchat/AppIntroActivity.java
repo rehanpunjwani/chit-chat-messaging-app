@@ -23,9 +23,9 @@ public class AppIntroActivity extends AppIntro {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_app_intro);
 
-        addSlide(AppIntroFragment.newInstance("Welcome to Chit Chat App", "Lets Discover new World of Chatting ",
+        addSlide(AppIntroFragment.newInstance("Welcome To Chit Chat App", "Lets Discover New World of Chatting ",
                 R.drawable.one, ContextCompat.getColor(getApplicationContext(), R.color.first_color)));
-        addSlide(AppIntroFragment.newInstance("All Features in one App", "You can make Friends,Public Groups, Audio Call, Send Files and Much More",
+        addSlide(AppIntroFragment.newInstance("All Features in one App", "You can make Friends, Public Groups, Audio Call, Send Files and Much More",
                 R.drawable.two, ContextCompat.getColor(getApplicationContext(), R.color.second_color)));
         addSlide(AppIntroFragment.newInstance("Get Started", "Enjoy ",
                 R.drawable.three, ContextCompat.getColor(getApplicationContext(), R.color.third_color)));

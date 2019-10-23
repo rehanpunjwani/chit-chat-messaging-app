@@ -337,6 +337,7 @@ public class ChatActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent chatIntent = new Intent(this, MainActivity.class);
+        chatIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         chatIntent.putExtra("backPressed","notification");
         startActivity(chatIntent);
         finish();

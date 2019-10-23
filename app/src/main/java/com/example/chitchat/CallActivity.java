@@ -2,6 +2,7 @@ package com.example.chitchat;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -52,6 +54,7 @@ public class CallActivity extends AppCompatActivity {
     ArrayList<Users> userArrayList;
     DatabaseReference reference;
     private String mChatUser;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +62,19 @@ public class CallActivity extends AppCompatActivity {
         setContentView(R.layout.activity_call);
         mChatUser = getIntent().getStringExtra("user_id");
 
+        mToolbar = (Toolbar) findViewById(R.id.call_bar);
+
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Call");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         recyclerView = findViewById(R.id.call_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        reference = FirebaseDatabase.getInstance().getReference().child("Users");
+        reference = FirebaseDatabase.getInstance().getReference().child("Users").child(mChatUser);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
@@ -92,43 +101,50 @@ public class CallActivity extends AppCompatActivity {
 
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 1: {
 
-                // If request is cancelled, the result arrays are empty.
+
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
                 } else {
 
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                     Toast.makeText(CallActivity.this, "Permission denied to Make Calls", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
 
 
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
 
-            private void fetchAllUsers() {
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    private void fetchAllUsers() {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 userArrayList.clear();
 
-                for(DataSnapshot des : dataSnapshot.getChildren()){
-                    Users user = des.getValue(Users.class);
+                    Users user = dataSnapshot.getValue(Users.class);
                     userArrayList.add(user);
-                }
+
             }
 
             @Override
@@ -183,7 +199,11 @@ public class CallActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Users user = userArrayList.get(getAdapterPosition());
+                        if(sinchClient!=null && sinchClient.isStarted())
                         callUser(user);
+                        else {
+                            Toast.makeText(CallActivity.this,"Please wait Call Client is Starting",Toast.LENGTH_LONG).show();
+                        }
 
                     }
                 });
@@ -233,6 +253,7 @@ public class CallActivity extends AppCompatActivity {
             ringtone.play();
             AlertDialog alertDialog = new AlertDialog.Builder(CallActivity.this).create();
             alertDialog.setTitle("Calling");
+            alertDialog.setCanceledOnTouchOutside(false);
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Reject", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -276,6 +297,7 @@ public class CallActivity extends AppCompatActivity {
         AlertDialog alertDialog = new AlertDialog.Builder(CallActivity.this).create();
         alertDialog.setTitle("ALERT");
         alertDialog.setMessage("Calling");
+        alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "HANGUP", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

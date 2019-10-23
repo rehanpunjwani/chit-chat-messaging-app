@@ -70,24 +70,24 @@ public class ChatsFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         text = (TextView) mMainView.findViewById(R.id.request_fragment_text);
 
-if( mAuth.getCurrentUser() != null) {
-    mCurrent_user_id = mAuth.getCurrentUser().getUid();
-    setHasOptionsMenu(true);
-    mConvDatabase = FirebaseDatabase.getInstance().getReference().child("Chat").child(mCurrent_user_id);
+        if (mAuth.getCurrentUser() != null) {
+            mCurrent_user_id = mAuth.getCurrentUser().getUid();
+            setHasOptionsMenu(true);
+            mConvDatabase = FirebaseDatabase.getInstance().getReference().child("Chat").child(mCurrent_user_id);
 
-    mConvDatabase.keepSynced(true);
-    mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-    mMessageDatabase = FirebaseDatabase.getInstance().getReference().child("messages").child(mCurrent_user_id);
-    mUsersDatabase.keepSynced(true);
+            mConvDatabase.keepSynced(true);
+            mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+            mMessageDatabase = FirebaseDatabase.getInstance().getReference().child("messages").child(mCurrent_user_id);
+            mUsersDatabase.keepSynced(true);
 
-    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-    linearLayoutManager.setReverseLayout(true);
-    linearLayoutManager.setStackFromEnd(true);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+            linearLayoutManager.setReverseLayout(true);
+            linearLayoutManager.setStackFromEnd(true);
 
-    mConvList.setHasFixedSize(true);
-    mConvList.setLayoutManager(linearLayoutManager);
+            mConvList.setHasFixedSize(true);
+            mConvList.setLayoutManager(linearLayoutManager);
 
-}
+        }
         // Inflate the layout for this fragment
         return mMainView;
     }
@@ -98,7 +98,7 @@ if( mAuth.getCurrentUser() != null) {
         super.onStart();
 
 
-        if(mConvDatabase != null ) {
+        if (mConvDatabase != null) {
             Query conversationQuery = mConvDatabase.orderByChild("timestamp");
 
             FirebaseRecyclerAdapter<Conv, ConvViewHolder> firebaseConvAdapter = new FirebaseRecyclerAdapter<Conv, ConvViewHolder>(
@@ -110,10 +110,9 @@ if( mAuth.getCurrentUser() != null) {
 
                 @Override
                 protected void onDataChanged() {
-                    if(getItemCount() == 0){
+                    if (getItemCount() == 0) {
                         text.setText("No Chats Available");
-                    }
-                    else{
+                    } else {
                         text.setText("");
                     }
                 }
@@ -162,49 +161,50 @@ if( mAuth.getCurrentUser() != null) {
                     });
 
 
-        if(list_user_id != null) {
-            mUsersDatabase.child(list_user_id).addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (list_user_id != null ) {
+                        mUsersDatabase.child(list_user_id).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot != null) {
 
 
-                final String userName = dataSnapshot.child("name").getValue().toString();
-                String userThumb = dataSnapshot.child("thumb_image").getValue().toString();
+                                    final String userName = dataSnapshot.child("name").getValue().toString();
+                                    String userThumb = dataSnapshot.child("thumb_image").getValue().toString();
 
-                if (dataSnapshot.hasChild("online")) {
+                                    if (dataSnapshot.hasChild("online")) {
 
-                    String userOnline = dataSnapshot.child("online").getValue().toString();
-                    convViewHolder.setUserOnline(userOnline);
+                                        String userOnline = dataSnapshot.child("online").getValue().toString();
+                                        convViewHolder.setUserOnline(userOnline);
 
-                }
+                                    }
 
-                convViewHolder.setName(userName);
-                convViewHolder.setUserImage(userThumb, getContext());
-
-
-                convViewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                                    convViewHolder.setName(userName);
+                                    convViewHolder.setUserImage(userThumb, getContext());
 
 
-                        Intent chatIntent = new Intent(getContext(), ChatActivity.class);
-                        chatIntent.putExtra("user_id", list_user_id);
-                        chatIntent.putExtra("user_name", userName);
-                        startActivity(chatIntent);
+                                    convViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+
+
+                                            Intent chatIntent = new Intent(getContext(), ChatActivity.class);
+                                            chatIntent.putExtra("user_id", list_user_id);
+                                            chatIntent.putExtra("user_name", userName);
+                                            startActivity(chatIntent);
+
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
 
                     }
-                });
-            }
-
-
-
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
                 }
             };
 
