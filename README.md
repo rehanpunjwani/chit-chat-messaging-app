@@ -1,5 +1,8 @@
 # ChitChatV1.0_GIKI
 AppCon 2019
+ 
+Recommended Android Studio 3.5 and
+Android 9.0
 
 1. Please Download the Given Repository.
 2. Just Clean Project
