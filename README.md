@@ -1,10 +1,9 @@
 # ChitChatV1.0_GIKI
 AppCon 2019
 
-Please Download the Given Repository.
-Just Clean Project
-And Build Project Again
-Make sure you have SDK 28 installed.
-Build the App
-Run the App
+1. Please Download the Given Repository.
+2. Just Clean Project
+3. And Build Project Again
+4. Make sure you have SDK 28 installed.
+5. Run the App
 Enjoy :)
