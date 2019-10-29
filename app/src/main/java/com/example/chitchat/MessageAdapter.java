@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.chitchat.Model.Messages;
 import com.google.firebase.auth.FirebaseAuth;
@@ -194,6 +195,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         viewHolder.playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(v.getContext(),"Playing..",Toast.LENGTH_LONG).show();
                 play_audio();
             }
 
