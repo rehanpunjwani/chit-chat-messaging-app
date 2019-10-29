@@ -28,13 +28,15 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'id.zelory:compressor:2.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.google.firebase:firebase-auth:11.4.0'
+    implementation 'com.google.firebase:firebase-auth:11.8.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.firebase:firebase-database:11.4.0'
+    implementation 'com.google.firebase:firebase-database:11.8.0'
+    implementation 'com.google.android.gms:play-services-auth:11.8.0'
+
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
-    implementation 'com.google.firebase:firebase-storage:11.4.0'
+    implementation 'com.google.firebase:firebase-storage:11.8.0'
     implementation 'com.firebaseui:firebase-ui-database:1.2.0'
-    implementation 'com.google.firebase:firebase-core:11.4.0'
+    implementation 'com.google.firebase:firebase-core:11.8.0'
 
     implementation 'android.arch.lifecycle:extensions:2.0.0'
 
@@ -45,7 +47,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestImplementation 'junit:junit:4.12'
 
-    implementation 'com.google.firebase:firebase-messaging:11.4.0'
+    implementation 'com.google.firebase:firebase-messaging:11.8.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'

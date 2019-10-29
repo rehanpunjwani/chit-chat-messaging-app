@@ -2,23 +2,33 @@ package com.example.chitchat;
 
 import android.app.ProgressDialog;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.chitchat.Utils.AES;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -32,10 +42,12 @@ import androidx.appcompat.widget.Toolbar;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private static final int GOOGLE_SIGN_IN =123 ;
     private TextInputLayout mDisplayName;
     private TextInputLayout mEmail;
     private TextInputLayout mPassword;
     private Button mCreateBtn;
+    private Button mGoogleSignBtn;
     private AES aes;
 
 
@@ -48,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     //Firebase Auth
     private FirebaseAuth mAuth;
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +85,20 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
 
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestIdToken(getString(R.string.default_web_client_id))
+//                .requestEmail()
+//                .build();
+
+//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
         // Android Fields
 
         mDisplayName = (TextInputLayout) findViewById(R.id.reg_name_et2);
         mEmail = (TextInputLayout) findViewById(R.id.reg_email);
         mPassword = (TextInputLayout) findViewById(R.id.reg_password);
         mCreateBtn = (Button) findViewById(R.id.reg_btn);
+        mGoogleSignBtn = (Button) findViewById(R.id.reg_google);
 
 
         mCreateBtn.setOnClickListener(new View.OnClickListener() {
@@ -103,9 +124,114 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+//      mGoogleSignBtn.setOnClickListener(new View.OnClickListener() {
+//          @Override
+//          public void onClick(View v) {
+//
+//              SignInGoogle();
+//          }
+//      });
+
 
 
     }
+//
+//    private void sigin_with_google(FirebaseUser user) {
+//        String email = user.getEmail();
+//        String displayname = user.getDisplayName();
+//        String uid = user.getUid();
+//
+//        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+//
+//        String device_token = FirebaseInstanceId.getInstance().getToken();
+//        // String eDisplayName = aes.encrypt(display_name); //AES Tested with display name Successfully
+//
+//        HashMap<String, String> userMap = new HashMap<>();
+//        userMap.put("name", displayname);
+//        userMap.put("status", getString(R.string.newStatus));
+//        userMap.put("image", "default");
+//        userMap.put("thumb_image", "default");
+//        userMap.put("device_token", device_token);
+//
+//        mDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//
+//                if (task.isSuccessful()) {
+//
+//                    mRegProgress.dismiss();
+//                    Intent mainIntent = new Intent(RegisterActivity.this,MainActivity.class);
+//                    startActivity(mainIntent);
+//
+//
+//                } else {
+//                    Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+//
+//                }
+//
+//            }
+//        });
+//
+//
+//    }
+
+//    public void SignInGoogle() {
+//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+//        startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
+//    }
+    
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == GOOGLE_SIGN_IN) {
+//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+//            try {
+//                GoogleSignInAccount account = task.getResult(ApiException.class);
+//                if (account != null) {
+//                    mRegProgress.setTitle("Signing in With Google");
+//                    mRegProgress.setMessage("Please wait while we create your account !");
+//                    mRegProgress.setCanceledOnTouchOutside(false);
+//                    mRegProgress.show();
+//                    firebaseAuthWithGoogle(account);
+//                }
+//            } catch (ApiException e) {
+//                mRegProgress.dismiss();
+//                Log.w("TAG", "Google sign in failed", e);
+//            }
+//        }
+//    }
+
+//    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+//        Log.d("TAG", "firebaseAuthWithGoogle:" + acct.getId());
+//
+//        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+//        mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if (task.isSuccessful()) {
+////                        progressBar.setVisibility(View.INVISIBLE);
+//
+//
+//                    Log.d("TAG", "signInWithCredential:success");
+//                    FirebaseUser user = mAuth.getCurrentUser();
+//
+//                    sigin_with_google(user);
+//
+//
+//                } else {
+////                        progressBar.setVisibility(View.INVISIBLE);
+//
+//                    Log.w("TAG", "signInWithCredential:failure", task.getException());
+//
+//                    Toast.makeText(RegisterActivity.this, "Authentication failed.",
+//                            Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//    }
+
+
 
     private void register_user(final String display_name, String email, String password) {
         if(!email.isEmpty() && !password.isEmpty() && !display_name.isEmpty()){
