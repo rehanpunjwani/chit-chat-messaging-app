@@ -1,4 +1,4 @@
-package com.example.chitchat;
+package com.example.chitchat.Fragment;
 
 
 import android.content.Intent;
@@ -22,6 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import com.example.chitchat.GroupChatActivity;
+import com.example.chitchat.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

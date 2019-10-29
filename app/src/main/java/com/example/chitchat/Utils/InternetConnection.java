@@ -1,4 +1,4 @@
-package com.example.chitchat;
+package com.example.chitchat.Utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

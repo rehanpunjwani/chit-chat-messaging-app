@@ -1,4 +1,4 @@
-package com.example.chitchat;
+package com.example.chitchat.Fragment;
 
 
 import android.content.Context;
@@ -15,10 +15,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.chitchat.CallActivity;
+import com.example.chitchat.ChatActivity;
+import com.example.chitchat.Model.Friends;
+import com.example.chitchat.ProfileActivity;
+import com.example.chitchat.R;
+import com.example.chitchat.UsersActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -78,7 +83,7 @@ public class FriendsFragment extends Fragment {
         mAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent allUserIntent = new Intent(getContext(),UsersActivity.class);
+                Intent allUserIntent = new Intent(getContext(), UsersActivity.class);
                 startActivity(allUserIntent);
             }
         });

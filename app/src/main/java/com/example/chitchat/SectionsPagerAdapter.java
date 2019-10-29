@@ -1,5 +1,10 @@
 package com.example.chitchat;
 
+import com.example.chitchat.Fragment.ChatsFragment;
+import com.example.chitchat.Fragment.FriendsFragment;
+import com.example.chitchat.Fragment.GroupFragment;
+import com.example.chitchat.Fragment.RequestFragment;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;

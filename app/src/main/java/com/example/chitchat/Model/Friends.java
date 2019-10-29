@@ -1,4 +1,4 @@
-package com.example.chitchat;
+package com.example.chitchat.Model;
 
 public class Friends {
     public String date;

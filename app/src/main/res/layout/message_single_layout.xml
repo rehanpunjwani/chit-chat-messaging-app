@@ -8,6 +8,21 @@
 
     >
 
+    <ImageButton
+        android:id="@+id/message_btn_voice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/message_text_layout"
+        android:background="@drawable/round_btn"
+        android:backgroundTint="#0EAC34"
+        android:src="@drawable/ic_play_arrow_black_24dp"
+        android:textColor="@color/common_google_signin_btn_text_dark_default" />
+
     <ImageView
         android:id="@+id/message_image_layout"
         android:layout_width="wrap_content"

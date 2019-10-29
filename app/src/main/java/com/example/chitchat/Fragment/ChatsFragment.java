@@ -1,4 +1,4 @@
-package com.example.chitchat;
+package com.example.chitchat.Fragment;
 
 
 import android.content.Context;
@@ -23,6 +23,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.chitchat.ChatActivity;
+import com.example.chitchat.Model.Conv;
+import com.example.chitchat.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;

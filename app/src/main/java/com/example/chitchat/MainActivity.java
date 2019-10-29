@@ -13,15 +13,14 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.chitchat.Utils.InternetConnection;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;

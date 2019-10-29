@@ -1,4 +1,4 @@
-package com.example.chitchat;
+package com.example.chitchat.Model;
 
 public class Request {
     String request_type;

@@ -34,6 +34,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reg_password" />
 
+    <Button
+        android:id="@+id/reg_google"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="76dp"
+        android:background="@drawable/round_btn"
+        android:backgroundTint="#fff"
+        android:drawableStart="@drawable/ic_google_logo"
+        android:drawableLeft="@drawable/ic_google_logo"
+        android:drawablePadding="20dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="10dp"
+        android:text="Sign In with Google"
+        android:textColor="#000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_password" />
+
     <TextView
         android:id="@+id/login_et1"
         android:layout_width="wrap_content"
@@ -76,7 +97,7 @@
             android:drawablePadding="5dp"
             android:hint="Enter your Name"
             android:textColor="#fff"
-            android:textColorHighlight="#fff"
+            android:textColorHighlight="#000"
             android:textColorHint="#fff"
             android:textColorLink="#fff" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -100,7 +121,7 @@
             android:hint="Enter your Email"
             android:inputType="textEmailAddress"
             android:textColor="#fff"
-            android:textColorHighlight="#fff"
+            android:textColorHighlight="#000"
             android:textColorHint="#fff"
             android:textColorLink="#fff" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -126,7 +147,7 @@
             android:hint="Enter your Password"
             android:inputType="textPassword"
             android:textColor="#fff"
-            android:textColorHighlight="#fff"
+            android:textColorHighlight="#000"
             android:textColorHint="#fff"
             android:textColorLink="#fff" />
     </com.google.android.material.textfield.TextInputLayout>

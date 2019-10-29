@@ -4,7 +4,7 @@
     android:id="@+id/frame_chat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatsFragment">
+    tools:context=".Fragment.ChatsFragment">
 
 
     <TextView

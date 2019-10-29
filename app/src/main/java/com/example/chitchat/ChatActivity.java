@@ -10,24 +10,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.chitchat.Model.Messages;
+import com.example.chitchat.Utils.GetTimeAgo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,9 +48,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +71,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private ImageButton mChatAddBtn;
     private ImageButton mChatSendBtn;
+    private ImageButton mVoiceMsgBtn;
     private EditText mChatMessageView;
 
     private RecyclerView mMessagesList;
@@ -80,6 +88,7 @@ public class ChatActivity extends AppCompatActivity {
 
     // Storage Firebase
     private StorageReference mImageStorage;
+    private StorageReference mVoiceStorage;
 
 
     //New Solution
@@ -89,6 +98,8 @@ public class ChatActivity extends AppCompatActivity {
     private String mPrevKey = "";
     private DatabaseReference mNotificationDatabase;
     private DatabaseReference mUserRef;
+    private MediaRecorder recorder;
+    private  String mfileName;
 
 
     @Override
@@ -118,6 +129,7 @@ public class ChatActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mCurrentUserId = mAuth.getCurrentUser().getUid();
 
+        //change in postion
         mChatUser = getIntent().getStringExtra("user_id");
         String userName = getIntent().getStringExtra("user_name");
 
@@ -132,6 +144,11 @@ public class ChatActivity extends AppCompatActivity {
 
         mChatAddBtn = (ImageButton) findViewById(R.id.chat_add_btn);
         mChatSendBtn = (ImageButton) findViewById(R.id.chat_send_btn);
+        mVoiceMsgBtn = (ImageButton) findViewById(R.id.chat_voice_btn);
+
+        mfileName = Environment.getExternalStorageDirectory().getAbsolutePath();
+        mfileName +="/recorded_audio.3gp";
+
         mChatMessageView = (EditText) findViewById(R.id.chat_message_view);
         mSentTimeView = findViewById(R.id.time_text_layout);
 
@@ -147,6 +164,8 @@ public class ChatActivity extends AppCompatActivity {
         mMessagesList.setAdapter(mAdapter);
 
         mImageStorage = FirebaseStorage.getInstance().getReference();
+        mVoiceStorage = FirebaseStorage.getInstance().getReference();
+
         mNotificationDatabase = FirebaseDatabase.getInstance().getReference().child("message_notifications");
         if(mCurrentUserId !=null && mChatUser!=null) {
             mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);
@@ -259,6 +278,26 @@ public class ChatActivity extends AppCompatActivity {
                 }
             });
 
+         mVoiceMsgBtn.setOnTouchListener(new View.OnTouchListener() {
+             @Override
+             public boolean onTouch(View view, MotionEvent motionEvent) {
+                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                     view.setBackgroundColor(Color.BLACK);
+
+                     Toast.makeText(ChatActivity.this,"Recording Started....",Toast.LENGTH_SHORT).show();
+                     startRecording();
+
+                 } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                     stopRecording();
+                     view.setBackgroundColor(Color.WHITE);
+                     sendVoiceMessage();
+                     Toast.makeText(ChatActivity.this,"Recording Stopped",Toast.LENGTH_SHORT).show();
+
+                 }
+                 return false;
+             }
+         });
+
 
             mChatAddBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -321,6 +360,32 @@ public class ChatActivity extends AppCompatActivity {
 
         }
     }
+
+
+    private void startRecording() {
+        recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setOutputFile(mfileName);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            recorder.prepare();
+        } catch (IOException e) {
+            Log.e("1", "prepare() failed");
+        }
+
+        recorder.start();
+    }
+
+    private void stopRecording() {
+        recorder.stop();
+        recorder.release();
+        recorder = null;
+    }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -695,5 +760,149 @@ public class ChatActivity extends AppCompatActivity {
         }
 
     }
+    private void sendVoiceMessage() {
+
+
+
+            final String current_user_ref = "messages/" + mCurrentUserId + "/" + mChatUser;
+            final String chat_user_ref = "messages/" + mChatUser + "/" + mCurrentUserId;
+
+            DatabaseReference user_message_push = mRootRef.child("messages")
+                    .child(mCurrentUserId).child(mChatUser).push();
+
+            final String push_id = user_message_push.getKey();
+            StorageReference filepath = mVoiceStorage.child("voice_messages").child( push_id + ".3gp");
+             Uri voiceUri = Uri.fromFile(new File(mfileName));
+
+             filepath.putFile(voiceUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                if(task.isSuccessful()){
+
+                    String download_url = task.getResult().getDownloadUrl().toString();
+
+
+                    Map messageMap = new HashMap();
+                    messageMap.put("message", download_url);
+                    messageMap.put("seen", false);
+                    messageMap.put("type", "voice");
+                    messageMap.put("time", ServerValue.TIMESTAMP);
+                    messageMap.put("from", mCurrentUserId);
+
+                    final Map messageUserMap = new HashMap();
+                    messageUserMap.put(current_user_ref + "/" + push_id, messageMap);
+                    messageUserMap.put(chat_user_ref + "/" + push_id, messageMap);
+
+
+
+
+
+                    DatabaseReference mChatUserOnline = FirebaseDatabase.getInstance().getReference().child("Users");
+
+
+
+
+                    mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);
+                    mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("timestamp").setValue(ServerValue.TIMESTAMP);
+
+                    mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("seen").setValue(false);
+                    mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("timestamp").setValue(ServerValue.TIMESTAMP);
+
+                    mRootRef.updateChildren(messageUserMap, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+
+                            if(databaseError != null){
+
+                                Log.d("CHAT_LOG", databaseError.getMessage().toString());
+
+                            }
+
+                        }
+                    });
+                    mChatUserOnline.child(mChatUser).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String s = dataSnapshot.child("online").getValue().toString();
+                            Boolean b = Boolean.valueOf(s);
+
+                            if(!b) {
+                                DatabaseReference newNotificationref = mRootRef.child("message_notifications").child(mChatUser).push();
+                                String newNotificationId = newNotificationref.getKey();
+
+                                HashMap<String, String> notificationData = new HashMap<>();
+                                notificationData.put("from", mCurrentUserId);
+                                notificationData.put("body", "New Voice Message");
+                                messageUserMap.put("message_notifications/" + mChatUser + "/" + newNotificationId, notificationData);
+//                         System.out.println("Online : "+ b + newNotificationId+message);
+                            }
+
+                            mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("seen").setValue(true);
+                            mRootRef.child("Chat").child(mCurrentUserId).child(mChatUser).child("timestamp").setValue(ServerValue.TIMESTAMP);
+
+                            mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("seen").setValue(false);
+                            mRootRef.child("Chat").child(mChatUser).child(mCurrentUserId).child("timestamp").setValue(ServerValue.TIMESTAMP);
+
+                            mRootRef.updateChildren(messageUserMap, new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+
+                                    if(databaseError != null){
+
+                                        Log.d("CHAT_LOG", databaseError.getMessage().toString());
+
+                                    }
+
+                                }
+                            });
+
+
+
+
+
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+
+
+
+
+                    mRootRef.updateChildren(messageUserMap, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+
+                            if(databaseError != null){
+
+                                Log.d("CHAT_LOG", databaseError.getMessage().toString());
+
+                            }
+
+                        }
+                    });
+
+
+                }
+
+            }
+        });
+
+
+
+
+
+
+        }
+
+
+
 
 }

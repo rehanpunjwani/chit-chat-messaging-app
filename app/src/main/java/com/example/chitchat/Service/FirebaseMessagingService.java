@@ -1,4 +1,4 @@
-package com.example.chitchat;
+package com.example.chitchat.Service;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 
+import com.example.chitchat.R;
 import com.google.firebase.messaging.RemoteMessage;
 
 import androidx.annotation.RequiresApi;

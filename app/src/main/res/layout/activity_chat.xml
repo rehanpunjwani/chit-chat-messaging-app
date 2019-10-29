@@ -39,6 +39,7 @@
         android:orientation="horizontal"
         android:weightSum="10">
 
+
         <ImageButton
             android:id="@+id/chat_add_btn"
             android:layout_width="wrap_content"
@@ -72,6 +73,16 @@
             android:background="@android:color/white"
             android:padding="10dp"
             app:srcCompat="@drawable/ic_send_black_24dp" />
+        <ImageButton
+            android:id="@+id/chat_voice_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:alpha="0.5"
+            android:background="@android:color/white"
+            android:padding="10dp"
+            app:srcCompat="@drawable/ic_mic_black_24dp" />
+
     </LinearLayout>
 
 </RelativeLayout>
