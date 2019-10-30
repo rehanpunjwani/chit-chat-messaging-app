@@ -36,15 +36,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reg_password" />
 
-    <TextView
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/login_et1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="24dp"
         android:layout_marginRight="123dp"
         android:text=""
         android:textColor="#fff"
@@ -53,9 +53,12 @@
         android:textColorLink="#fff"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reg_app_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/reg_app_bar"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="login.json"
+        app:lottie_loop="true" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/reg_email"

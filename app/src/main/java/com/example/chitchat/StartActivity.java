@@ -14,7 +14,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -45,6 +48,9 @@ public class StartActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private ProgressDialog mRegProgress;
     private FirebaseAuth mAuth;
+    private Animation fromBottom, fromTop;
+    private ImageView imageView;
+
 
 
 
@@ -55,10 +61,23 @@ public class StartActivity extends AppCompatActivity {
         mRegProgress = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
 
+
+        fromBottom = AnimationUtils.loadAnimation(this,R.anim.frombottom);
+        fromTop = AnimationUtils.loadAnimation(this,R.anim.fromtop);
+
         setContentView(R.layout.activity_start);
         regBtn = findViewById(R.id.start_reg_btn);
         logBtn = findViewById(R.id.start_reg_btn2);
+
+        imageView = findViewById(R.id.imageView2);
+        regBtn.setAnimation(fromBottom);
+        logBtn.setAnimation(fromBottom);
+        imageView.setAnimation(fromTop);
+
+
+
         mGoogleSignBtn = (Button) findViewById(R.id.reg_google);
+        mGoogleSignBtn.setAnimation(fromBottom);
         regBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

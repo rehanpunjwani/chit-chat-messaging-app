@@ -9,6 +9,7 @@
         <item name="colorControlNormal">#fff</item>
         <item name="colorControlActivated">#000</item>
         <item name="colorControlHighlight">#000</item>
+
     </style>
 
     <style name="PopupMenuStyle" parent="Theme.AppCompat.Light">

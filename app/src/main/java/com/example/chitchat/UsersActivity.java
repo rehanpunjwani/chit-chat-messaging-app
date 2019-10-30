@@ -181,6 +181,16 @@ public class UsersActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(
+                R.anim.slide_in,
+                R.anim.panel_close
+        );
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

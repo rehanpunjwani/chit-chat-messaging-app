@@ -19,6 +19,8 @@
         android:padding="10dp"
         android:text="Need A New Account?" />
 
+
+
     <Button
         android:id="@+id/start_reg_btn2"
         android:layout_width="wrap_content"
@@ -78,7 +80,7 @@
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="110dp"
-        app:srcCompat="@drawable/fure" />
+        android:layout_marginTop="93dp"
+        android:src="@drawable/fure" />
 
 </RelativeLayout>
